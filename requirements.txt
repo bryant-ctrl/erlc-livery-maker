@@ -1,0 +1,6 @@
+PyQt6==6.6.1
+Pillow==10.2.0
+opencv-python==4.9.0.80
+replicate==0.25.1
+requests==2.31.0
+numpy==1.26.3
