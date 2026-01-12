@@ -40,7 +40,7 @@ pyinstaller --clean --onefile \
 cp dist/ERLC_Livery_Maker "$APP_DIR/usr/bin/"
 
 # Create desktop entry
-cat > "$APP_DIR/usr/share/applications/erlc-livery-maker.desktop" << EOF
+cat > "$APP_DIR/erlc-livery-maker.desktop" << EOF
 [Desktop Entry]
 Type=Application
 Name=ER:LC Livery Maker
@@ -50,6 +50,12 @@ Icon=erlc-livery-maker
 Categories=Graphics;Utility;
 Terminal=false
 EOF
+
+# Copy desktop file to proper location as well
+cp "$APP_DIR/erlc-livery-maker.desktop" "$APP_DIR/usr/share/applications/"
+
+# Create a simple icon (placeholder text file for now)
+echo "ERLC" > "$APP_DIR/erlc-livery-maker.png"
 
 # Create AppRun script
 cat > "$APP_DIR/AppRun" << 'EOF'
