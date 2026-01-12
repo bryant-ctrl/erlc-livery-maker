@@ -23,21 +23,21 @@ pip install pyinstaller
 
 # Build with PyInstaller
 echo "Building with PyInstaller..."
-pyinstaller --clean --onefile \
+pyinstaller --clean --onedir \
     --name ERLC_Livery_Maker \
     --add-data "config.json:." \
     --add-data "templates:templates" \
     --hidden-import PIL \
     --hidden-import PIL._imaging \
+    --hidden-import PIL._tkinter_finder \
     --hidden-import cv2 \
     --hidden-import numpy \
     --hidden-import replicate \
-    --hidden-import PyQt6 \
     --windowed \
-    src/main.py
+    src/main_tk.py
 
-# Copy executable to AppDir
-cp dist/ERLC_Livery_Maker "$APP_DIR/usr/bin/"
+# Copy entire dist folder to AppDir
+cp -r dist/ERLC_Livery_Maker/* "$APP_DIR/usr/bin/"
 
 # Create desktop entry
 cat > "$APP_DIR/erlc-livery-maker.desktop" << EOF
@@ -63,8 +63,8 @@ cat > "$APP_DIR/AppRun" << 'EOF'
 SELF=$(readlink -f "$0")
 HERE=${SELF%/*}
 export PATH="${HERE}/usr/bin:${PATH}"
-export LD_LIBRARY_PATH="${HERE}/usr/lib:${LD_LIBRARY_PATH}"
-cd "${HERE}/usr/bin"
+export LD_LIBRARY_PATH="${HERE}/usr/bin:${HERE}/usr/lib:${LD_LIBRARY_PATH}"
+cd "${HERE}"
 exec "${HERE}/usr/bin/ERLC_Livery_Maker" "$@"
 EOF
 
@@ -79,7 +79,7 @@ fi
 
 # Build AppImage
 echo "Creating AppImage..."
-./appimagetool-x86_64.AppImage "$APP_DIR" "ERLC_Livery_Maker-x86_64.AppImage"
+ARCH=x86_64 ./appimagetool-x86_64.AppImage "$APP_DIR" "ERLC_Livery_Maker-x86_64.AppImage"
 
 echo "Build complete! AppImage: ERLC_Livery_Maker-x86_64.AppImage"
 
