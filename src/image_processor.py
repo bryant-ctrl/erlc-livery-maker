@@ -90,7 +90,7 @@ class ImageProcessor:
         return result
 
     def prepare_for_api(self, image: Image.Image, mask: Image.Image,
-                       max_size: int = 1024, min_size: int = 256) -> Tuple[Image.Image, Image.Image]:
+                       max_size: int = 4096, min_size: int = 256) -> Tuple[Image.Image, Image.Image]:
         """
         Prepare image and mask for API submission by resizing if needed.
         Some APIs have size limits and minimum requirements.

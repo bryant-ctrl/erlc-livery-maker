@@ -41,7 +41,7 @@ class ReplicateAPIClient:
         mask: Image.Image,
         prompt: str,
         view: str = "",
-        negative_prompt: str = "blurry, low quality, distorted, deformed, 3d render, headlights, taillights, wheels, windows, car parts, realistic lighting, shadows, reflections",
+        negative_prompt: str = "blurry, low quality, distorted, deformed, text, words, letters",
         num_inference_steps: int = 50,
         guidance_scale: float = 7.5
     ) -> Optional[Image.Image]:
@@ -64,11 +64,12 @@ class ReplicateAPIClient:
             raise ValueError("Replicate API key not set")
 
         try:
-            # Enhance prompt with view context - focus on paint/decals only
-            full_prompt = f"{prompt}, vehicle paint design, decals and graphics only"
+            # Build clean prompt - just the user's design request
+            full_prompt = f"{prompt}"
             if view:
-                full_prompt += f", {view.lower()} view"
-            full_prompt += ", professional livery, crisp graphics, flat 2D design, vehicle wrap design"
+                full_prompt += f", {view.lower()} side view"
+            # Add quality/style descriptors that help without confusing the AI
+            full_prompt += ", high quality vehicle livery, professional design, clean graphics"
 
             print(f"Generating with prompt: {full_prompt}")
 
