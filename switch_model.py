@@ -7,18 +7,24 @@ import sys
 
 MODELS = {
     "1": {
+        "name": "Ideogram v3 Turbo - BEST FOR TEXT",
+        "id": "ideogram-ai/ideogram-v3-turbo",
+        "cost": "$0.03/image ($0.15/livery)",
+        "quality": "⭐⭐⭐⭐⭐ (text)"
+    },
+    "2": {
         "name": "FLUX.1 Fill [pro] - BEST QUALITY",
         "id": "black-forest-labs/flux-fill-pro",
         "cost": "$0.05/image ($0.25/livery)",
         "quality": "⭐⭐⭐⭐⭐"
     },
-    "2": {
+    "3": {
         "name": "FLUX Dev Inpainting - HIGH QUALITY",
         "id": "zsxkib/flux-dev-inpainting",
         "cost": "$0.01-0.02/image ($0.05-0.10/livery)",
         "quality": "⭐⭐⭐⭐"
     },
-    "3": {
+    "4": {
         "name": "Stable Diffusion - BUDGET (Testing Only)",
         "id": "stability-ai/stable-diffusion-inpainting:95b7223104132402a9ae91cc677285bc5eb997834bd2349fa486f53910fd68b3",
         "cost": "$0.0027/image ($0.01/livery)",
@@ -42,7 +48,7 @@ def main():
         print()
 
     # Get user choice
-    choice = input("Select model (1-3) or 'q' to quit: ").strip()
+    choice = input("Select model (1-4) or 'q' to quit: ").strip()
 
     if choice.lower() == 'q':
         print("Cancelled.")

@@ -4,7 +4,22 @@ This document lists the AI models you can use with the ER:LC Livery Maker, from 
 
 ## Recommended Models (Best to Cheapest)
 
-### 1. FLUX.1 Fill [pro] - HIGHEST QUALITY ⭐
+### 1. Ideogram v3 Turbo - BEST FOR TEXT ⭐⭐⭐
+**Model ID:** `ideogram-ai/ideogram-v3-turbo`
+
+**Quality:** Industry-leading text rendering
+- **Best text generation** of any model
+- Perfect for liveries with police numbers, department names, badges
+- Excellent inpainting capabilities
+- Can render complex text accurately
+
+**Cost:** $0.03 per image ($0.15 for full 5-view livery)
+
+**Speed:** Fast (Turbo variant)
+
+**When to use:** Any livery with text/numbers (police cars, fire trucks, etc.)
+
+### 2. FLUX.1 Fill [pro] - HIGHEST QUALITY ⭐⭐
 **Model ID:** `black-forest-labs/flux-fill-pro`
 
 **Quality:** Best available - state-of-the-art inpainting
@@ -19,7 +34,7 @@ This document lists the AI models you can use with the ER:LC Livery Maker, from 
 
 **When to use:** Final production liveries, important designs
 
-### 2. FLUX Dev Inpainting - HIGH QUALITY
+### 3. FLUX Dev Inpainting - HIGH QUALITY
 **Model ID:** `zsxkib/flux-dev-inpainting`
 
 **Quality:** Excellent - nearly as good as Pro
@@ -34,7 +49,7 @@ This document lists the AI models you can use with the ER:LC Livery Maker, from 
 
 **When to use:** Best balance of quality and cost
 
-### 3. Stable Diffusion Inpainting - BUDGET
+### 4. Stable Diffusion Inpainting - BUDGET
 **Model ID:** `stability-ai/stable-diffusion-inpainting:95b7223...`
 
 **Quality:** Good for testing
@@ -76,6 +91,7 @@ def __init__(self, api_key: str, model: str = "black-forest-labs/flux-fill-pro")
 
 | Model | Quality | Cost/Image | Cost/Livery | Speed | Best For |
 |-------|---------|------------|-------------|-------|----------|
+| Ideogram v3 Turbo | ⭐⭐⭐⭐⭐ (text) | $0.03 | $0.15 | Fast | Text/numbers |
 | FLUX.1 Fill [pro] | ⭐⭐⭐⭐⭐ | $0.05 | $0.25 | 15-30s | Final designs |
 | FLUX Dev | ⭐⭐⭐⭐ | $0.01-0.02 | $0.05-0.10 | 30-50s | Production use |
 | Stable Diffusion | ⭐⭐ | $0.0027 | $0.01 | 2s | Testing only |

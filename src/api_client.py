@@ -78,7 +78,16 @@ class ReplicateAPIClient:
             mask_uri = self.image_to_data_uri(mask)
 
             # Determine model type and use appropriate parameters
-            if "flux-fill-pro" in self.model or "flux" in self.model.lower():
+            if "ideogram" in self.model.lower():
+                # Ideogram models (best for text)
+                input_params = {
+                    "image": image_uri,
+                    "mask": mask_uri,
+                    "prompt": full_prompt,
+                    "magic_prompt_option": "Auto",  # Optimize prompts automatically
+                    "style_type": "Auto"
+                }
+            elif "flux-fill-pro" in self.model or "flux" in self.model.lower():
                 # FLUX models use different parameter names
                 input_params = {
                     "image": image_uri,
