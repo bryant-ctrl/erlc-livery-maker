@@ -1,11 +1,18 @@
 # -*- mode: python ; coding: utf-8 -*-
+from PyInstaller.utils.hooks import copy_metadata
+
+datas = [('config.json', '.'), ('templates', 'templates')]
+datas += copy_metadata('replicate')
+datas += copy_metadata('httpx')
+datas += copy_metadata('pydantic')
+datas += copy_metadata('anyio')
 
 
 a = Analysis(
     ['src/main_tk.py'],
     pathex=[],
     binaries=[],
-    datas=[('config.json', '.'), ('templates', 'templates')],
+    datas=datas,
     hiddenimports=['PIL', 'PIL._imaging', 'PIL._tkinter_finder', 'cv2', 'numpy', 'replicate'],
     hookspath=[],
     hooksconfig={},

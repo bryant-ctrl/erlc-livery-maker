@@ -2,6 +2,7 @@
 Template Manager - Scans and manages vehicle template files
 """
 import os
+import sys
 from pathlib import Path
 from typing import Dict, List, Optional
 
@@ -12,9 +13,33 @@ class TemplateManager:
     REQUIRED_VIEWS = ["Front", "Rear", "Left", "Right", "Top"]
 
     def __init__(self, templates_dir: str):
-        self.templates_dir = Path(templates_dir)
+        self.templates_dir = self._resolve_templates_dir(templates_dir)
         self.vehicles: Dict[str, Dict[str, Path]] = {}
         self.scan_templates()
+
+    def _resolve_templates_dir(self, templates_dir: str) -> Path:
+        """Resolve templates directory, checking multiple locations"""
+        # Try relative to current directory
+        path = Path(templates_dir)
+        if path.exists():
+            return path
+
+        # Try relative to script location (for PyInstaller)
+        if getattr(sys, 'frozen', False):
+            # Running in PyInstaller bundle
+            bundle_dir = Path(sys._MEIPASS)
+            path = bundle_dir / templates_dir
+            if path.exists():
+                return path
+
+        # Try relative to this file's location
+        script_dir = Path(__file__).parent.parent
+        path = script_dir / templates_dir
+        if path.exists():
+            return path
+
+        # Return original path even if it doesn't exist
+        return Path(templates_dir)
 
     def scan_templates(self) -> None:
         """Scan templates directory for vehicle folders"""

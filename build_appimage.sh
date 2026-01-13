@@ -33,6 +33,10 @@ pyinstaller --clean --onedir \
     --hidden-import cv2 \
     --hidden-import numpy \
     --hidden-import replicate \
+    --copy-metadata replicate \
+    --copy-metadata httpx \
+    --copy-metadata pydantic \
+    --copy-metadata anyio \
     --windowed \
     src/main_tk.py
 
