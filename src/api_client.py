@@ -75,7 +75,15 @@ class ReplicateAPIClient:
 
             # Convert images to data URIs
             image_uri = self.image_to_data_uri(image)
-            mask_uri = self.image_to_data_uri(mask)
+
+            # Ideogram uses INVERTED mask (black = inpaint, white = preserve)
+            # Other models use white = inpaint, black = preserve
+            if "ideogram" in self.model.lower():
+                from PIL import ImageOps
+                mask_inverted = ImageOps.invert(mask)
+                mask_uri = self.image_to_data_uri(mask_inverted)
+            else:
+                mask_uri = self.image_to_data_uri(mask)
 
             # Determine model type and use appropriate parameters
             if "ideogram" in self.model.lower():
