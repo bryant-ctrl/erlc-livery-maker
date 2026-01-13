@@ -13,13 +13,13 @@ import time
 class ReplicateAPIClient:
     """Client for Replicate API image inpainting"""
 
-    def __init__(self, api_key: str, model: str = "stability-ai/stable-diffusion-inpainting"):
+    def __init__(self, api_key: str, model: str = "stability-ai/stable-diffusion-inpainting:95b7223104132402a9ae91cc677285bc5eb997834bd2349fa486f53910fd68b3"):
         """
         Initialize Replicate API client
 
         Args:
             api_key: Replicate API key
-            model: Model identifier to use for inpainting
+            model: Model identifier to use for inpainting (with version hash)
         """
         self.api_key = api_key
         self.model = model
