@@ -218,7 +218,9 @@ class LiveryGeneratorApp:
                 )
 
                 if generated is None:
-                    self.root.after(0, lambda: self.on_error("Generation failed - check API key and connection"))
+                    error_msg = "Generation failed - check API key and connection\n\nPossible issues:\n- Invalid API key\n- No internet connection\n- Insufficient Replicate credits\n- Model not available"
+                    print(f"ERROR: {error_msg}")
+                    self.root.after(0, lambda: self.on_error(error_msg))
                     return
 
                 self.status_var.set(f"Compositing result ({view})...")
@@ -231,7 +233,9 @@ class LiveryGeneratorApp:
                 self.root.after(0, lambda: self.on_generation_finished(final, view, is_preview))
 
             except Exception as e:
-                self.root.after(0, lambda: self.on_error(str(e)))
+                import traceback
+                error_details = f"{str(e)}\n\nDetails:\n{traceback.format_exc()}"
+                self.root.after(0, lambda: self.on_error(error_details))
 
         thread = threading.Thread(target=generate, daemon=True)
         thread.start()
@@ -365,7 +369,9 @@ class LiveryGeneratorApp:
                     self.root.after(0, lambda: callback(None, view))
 
             except Exception as e:
-                self.root.after(0, lambda: self.on_error(str(e)))
+                import traceback
+                error_details = f"{str(e)}\n\nDetails:\n{traceback.format_exc()}"
+                self.root.after(0, lambda: self.on_error(error_details))
 
         thread = threading.Thread(target=generate, daemon=True)
         thread.start()
