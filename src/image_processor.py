@@ -90,15 +90,16 @@ class ImageProcessor:
         return result
 
     def prepare_for_api(self, image: Image.Image, mask: Image.Image,
-                       max_size: int = 1024) -> Tuple[Image.Image, Image.Image]:
+                       max_size: int = 1024, min_size: int = 256) -> Tuple[Image.Image, Image.Image]:
         """
         Prepare image and mask for API submission by resizing if needed.
-        Some APIs have size limits.
+        Some APIs have size limits and minimum requirements.
 
         Args:
             image: Template image
             mask: Inpainting mask
             max_size: Maximum dimension size
+            min_size: Minimum dimension size (for FLUX and other models)
 
         Returns:
             Tuple of (resized_image, resized_mask)
@@ -114,6 +115,16 @@ class ImageProcessor:
             else:
                 new_height = max_size
                 new_width = int(width * (max_size / height))
+
+            # Ensure minimum size is met
+            if new_width < min_size:
+                scale = min_size / new_width
+                new_width = min_size
+                new_height = int(new_height * scale)
+            if new_height < min_size:
+                scale = min_size / new_height
+                new_height = min_size
+                new_width = int(new_width * scale)
 
             # Resize both image and mask
             image_resized = image.resize((new_width, new_height), Image.Resampling.LANCZOS)
