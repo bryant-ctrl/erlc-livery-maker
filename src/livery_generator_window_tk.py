@@ -42,7 +42,8 @@ class LiveryGeneratorApp:
 
         # Initialize API client if key is set
         if self.config.get("replicate_api_key"):
-            self.api_client = ReplicateAPIClient(self.config["replicate_api_key"])
+            model = self.config.get("inpainting_model", "black-forest-labs/flux-fill-pro")
+            self.api_client = ReplicateAPIClient(self.config["replicate_api_key"], model=model)
 
     def load_config(self) -> dict:
         """Load configuration from config.json"""
@@ -149,7 +150,8 @@ class LiveryGeneratorApp:
         api_key = self.api_key_var.get().strip()
         self.config["replicate_api_key"] = api_key
         self.save_config()
-        self.api_client = ReplicateAPIClient(api_key)
+        model = self.config.get("inpainting_model", "black-forest-labs/flux-fill-pro")
+        self.api_client = ReplicateAPIClient(api_key, model=model)
         messagebox.showinfo("Success", "API key saved!")
 
     def on_vehicle_changed(self, event=None):
