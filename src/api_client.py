@@ -76,10 +76,20 @@ class ReplicateAPIClient:
             image_uri = self.image_to_data_uri(image)
             mask_uri = self.image_to_data_uri(mask)
 
-            # Run the model
-            output = replicate.run(
-                self.model,
-                input={
+            # Determine model type and use appropriate parameters
+            if "flux-fill-pro" in self.model or "flux" in self.model.lower():
+                # FLUX models use different parameter names
+                input_params = {
+                    "image": image_uri,
+                    "mask": mask_uri,
+                    "prompt": full_prompt,
+                    "steps": num_inference_steps,
+                    "guidance": guidance_scale * 8,  # FLUX uses higher scale (1.5-100 vs 1-20)
+                    "output_format": "png"
+                }
+            else:
+                # Stable Diffusion models use original parameter names
+                input_params = {
                     "image": image_uri,
                     "mask": mask_uri,
                     "prompt": full_prompt,
@@ -87,7 +97,9 @@ class ReplicateAPIClient:
                     "num_inference_steps": num_inference_steps,
                     "guidance_scale": guidance_scale,
                 }
-            )
+
+            # Run the model
+            output = replicate.run(self.model, input=input_params)
 
             # Handle different output formats
             if isinstance(output, list) and len(output) > 0:
